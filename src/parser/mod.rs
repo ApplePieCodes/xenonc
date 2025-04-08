@@ -963,11 +963,18 @@ impl Parser {
         
         module.name = self.parse_identifier()?;
         
+        if self.match_token(TokenKind::Semicolon, 0)? {
+            self.consume()?;
+            return Ok(module);
+        }
+
         self.consume()?;
 
+        let mut items= vec![];
         while !self.match_token(TokenKind::CloseBrace, 0)? {
-            module.items.push(self.parse_item()?);
+            items.push(self.parse_item()?);
         }
+        module.items = Some(items);
         
         self.consume()?;
         

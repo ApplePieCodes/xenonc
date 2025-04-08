@@ -263,7 +263,7 @@ pub struct Module {
     pub attributes: Vec<Attribute>,
     pub visibility: Visibility,
     pub name: Identifier,
-    pub items: Vec<Item>
+    pub items: Option<Vec<Item>>
 }
 
 #[derive(Clone, Debug, Default, PartialEq, PartialOrd, Serialize, Deserialize, Hash)]
