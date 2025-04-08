@@ -7,6 +7,7 @@ pub mod lexer;
 pub mod parser;
 pub mod ast;
 pub mod resolve;
+mod hir;
 
 fn main() {
     let mut emits = EmitType::Ast;
@@ -33,7 +34,7 @@ fn main() {
     let code = fs::read_to_string(input.clone()).unwrap();
     let tokens = Lexer::new(code).tokenize().unwrap();
     let ast = parser::Parser::new(tokens).parse(input.clone()).unwrap();
-    let symboltable = resolve::walk_tank(ast.clone());
+    let symboltable = resolve::symbol_table::walk_tank(ast.clone());
     println!("{:#?}", symboltable);
     if emits == EmitType::Ast {
         let _ = fs::write(format!("{}.ast", output), format!("{:#?}", ast));
